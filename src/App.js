@@ -20,7 +20,12 @@ function App() {
     if (question) {
       if (localStorage.getItem("history")) {
         let history = JSON.parse(localStorage.getItem("history"));
+        history = history.slice(0, 19);
         history = [question, ...history];
+        history = history.map(
+          (item) => item.charAt(0).toUpperCase() + item.slice(1).trim()
+        );
+        history = [...new Set(history)];
         localStorage.setItem("history", JSON.stringify(history));
         seteRcentHistory(history);
       } else {
@@ -43,10 +48,11 @@ function App() {
       body: JSON.stringify(payload),
     });
     response = await response.json();
+
     let dataString = response.candidates[0].content.parts[0].text;
     dataString = dataString.split("* ");
     dataString = dataString.map((item) => item.trim());
-    // console.log(dataString);
+
     setResult([
       ...result,
       { type: "q", text: question ? question : selectedHistory },
@@ -95,6 +101,7 @@ function App() {
             <h1 className=" p-2 m-2 text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pink-700 to-violet-700">
               Hello User, Ask Me Anything
             </h1>
+            <p className="dark:text-gray-100 text-zinc-900  text-left ml-3 text-3xl ">Gemini</p>
             {loader ? (
               <div role="status">
                 <svg
