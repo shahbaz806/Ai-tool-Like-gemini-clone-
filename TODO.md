@@ -1,0 +1,3 @@
+- [x] Update tailwind.config.js to add darkMode: 'class'
+- [x] Run the React app
+- [x] Test dark mode toggle functionality
